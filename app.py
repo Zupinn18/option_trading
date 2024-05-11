@@ -1,8 +1,13 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from pymongo import MongoClient
 from bson import ObjectId
 import json
 import pandas as pd
+
+
+def index():
+    return render_template('index.html')
+
 
 class CustomJSONEncoder(json.JSONEncoder):
     def default(self, obj):
