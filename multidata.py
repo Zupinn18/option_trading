@@ -19,8 +19,10 @@ unsubscribe_list = []
 def save_to_mongodb(token, data):
     collection_name = f'token_{token}'  # Create collection name based on the token
     collection = db[collection_name]
+    timestamp = datetime.now()  # Get current timestamp
+    data['timestamp'] = timestamp  # Add timestamp to the data
     collection.insert_one(data)
-    print(f"Data saved for token {token}")
+    print(f"Data saved for token {token} at {timestamp}")
 
 def socket_open():
     print("Connected")
@@ -79,4 +81,4 @@ sleep(10)
 print(datetime.now())
 
 while True:
-    sleep(1) 
+    sleep(1)
