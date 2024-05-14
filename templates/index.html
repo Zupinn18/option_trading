@@ -13,21 +13,26 @@
     </div>
 
     <script>
-        // JavaScript code to fetch data from Flask route and update the HTML
-        fetch('http://65.2.34.239:8005/get_data')
-            .then(response => response.json())
-            .then(data => {
-                const tokenDataElement = document.getElementById('tokenData');
-                Object.keys(data).forEach(token => {
-                    const tokenInfo = data[token];
-                    const tokenDiv = document.createElement('div');
-                    tokenDiv.innerHTML = `<p>Token: ${token}</p>
-                                          <p>Status: ${tokenInfo.status}</p>
-                                          <p>Data: ${JSON.stringify(tokenInfo.data)}</p>`;
-                    tokenDataElement.appendChild(tokenDiv);
-                });
-            })
-            .catch(error => console.error('Error fetching data:', error));
+        function fetchData() {
+            fetch('http://127.0.0.1:8009/get_data')
+                .then(response => response.json())
+                .then(data => {
+                    const tokenDataElement = document.getElementById('tokenData');
+                    tokenDataElement.innerHTML = '';  // Clear previous data
+                    Object.keys(data).forEach(token => {
+                        const tokenInfo = data[token];
+                        const tokenDiv = document.createElement('div');
+                        tokenDiv.innerHTML = `<p>Token: ${token}</p>
+                                              <p>Status: ${tokenInfo.status}</p>
+                                              <p>Data: ${JSON.stringify(tokenInfo.data)}</p>`;
+                        tokenDataElement.appendChild(tokenDiv);
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        // Fetch data every second
+        setInterval(fetchData, 1000);
     </script>
 </body>
 </html>
