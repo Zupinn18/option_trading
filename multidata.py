@@ -6,7 +6,7 @@ from time import sleep
 
 # MongoDB connection
 client = MongoClient('mongodb://localhost:27017/')
-db = client['token_data']
+db = client['token_data_22']
 
 alice = Aliceblue(user_id='AB093838', api_key='cy5uYssgegMaUOoyWy0VGLBA6FsmbxYd0jNkajvBVJuEV9McAM3o0o2yG6Z4fEFYUGtTggJYGu5lgK89HumH3nBLbxsLjgplbodFHDLYeXX0jGQ5CUuGtDvYKSEzWSMk')
 print(alice.get_session_id()) # Get Session ID
@@ -72,7 +72,7 @@ while not socket_opened:
     pass
 
 # Example tokens
-tokens = [44152, 44159, 44160, 44161, 44162, 44163, 44164, 44171, 44172, 44183]
+tokens = [41558, 41561, 41568, 41569, 41572, 41573, 41574, 41576, 41577, 41610, 41615, 41616, 41617, 41620, 41621, 41638]
 
 subscribe_list = [alice.get_instrument_by_token('NFO', token) for token in tokens]
 alice.subscribe(subscribe_list)

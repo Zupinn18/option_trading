@@ -22,7 +22,7 @@ app.json_encoder = CustomJSONEncoder  # Set the custom JSON encoder for the Flas
 
 # MongoDB connection
 client = MongoClient('mongodb://localhost:27017/')
-db = client['token_data']
+db = client['token_data_22']
 
 tokens = [41558, 41561, 41568, 41569, 41572, 41573, 41574, 41576, 41577, 41610, 41615, 41616, 41617, 41620, 41621, 41638]
 df = pd.read_csv('NFO.csv')
