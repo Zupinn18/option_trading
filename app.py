@@ -4,10 +4,7 @@ from bson import ObjectId
 import json
 import pandas as pd
 
-
-def index():
-    return render_template('index.html')
-
+app = Flask(__name__)
 
 class CustomJSONEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -15,7 +12,6 @@ class CustomJSONEncoder(json.JSONEncoder):
             return str(obj)
         return json.JSONEncoder.default(self, obj)
 
-app = Flask(__name__)
 app.json_encoder = CustomJSONEncoder  # Set the custom JSON encoder for the Flask app
 
 # MongoDB connection
@@ -28,10 +24,9 @@ df = pd.read_csv('NFO.csv')
 # Filter the DataFrame to only include rows with the specified token numbers
 filtered_df = df[df['Token'].isin(tokens)]
 
-# Extract the strike price for each token number
-strike_prices = filtered_df['Strike Price']
-
-print(strike_prices)
+@app.route('/', methods=['GET'])
+def index():
+    return render_template('index.html')
 
 @app.route('/get_data', methods=['GET'])
 def get_data():
