@@ -7,7 +7,10 @@ import pandas as pd
 from datetime import datetime
 
 app = Flask(__name__)
+<<<<<<< HEAD
 CORS(app)
+=======
+>>>>>>> 4fcc10db2e34928b362b1a8877306394207c8eb5
 
 def parse_json(data):
     return json.loads(json_util.dumps(data))
@@ -24,9 +27,9 @@ app.json_encoder = CustomJSONEncoder  # Set the custom JSON encoder for the Flas
 
 # MongoDB connection
 client = MongoClient('mongodb://localhost:27017/')
-db = client['token_data']
+db = client['token_data_22']
 
-tokens = [44152, 44159, 44160, 44161, 44162, 44163, 44164, 44171, 44172, 44183]
+tokens = [41558, 41561, 41568, 41569, 41572, 41573, 41574, 41576, 41577, 41610, 41615, 41616, 41617, 41620, 41621, 41638]
 df = pd.read_csv('NFO.csv')
 
 # Filter the DataFrame to only include rows with the specified token numbers
@@ -34,7 +37,10 @@ filtered_df = df[df['Token'].isin(tokens)]
 
 # Extract the strike price, option type, and token for each token number
 strike_prices = filtered_df[['Strike Price', 'Option Type', 'Token']]
+<<<<<<< HEAD
 strike_prices.to_csv('updated_NFO.csv', index=False)
+=======
+>>>>>>> 4fcc10db2e34928b362b1a8877306394207c8eb5
 
 print(strike_prices)
 

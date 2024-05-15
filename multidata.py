@@ -6,7 +6,7 @@ from time import sleep
 
 # MongoDB connection
 client = MongoClient('mongodb://localhost:27017/')
-db = client['token_data']
+db = client['token_data_22']
 
 alice = Aliceblue(user_id='AB093838', api_key='cy5uYssgegMaUOoyWy0VGLBA6FsmbxYd0jNkajvBVJuEV9McAM3o0o2yG6Z4fEFYUGtTggJYGu5lgK89HumH3nBLbxsLjgplbodFHDLYeXX0jGQ5CUuGtDvYKSEzWSMk')
 print(alice.get_session_id()) # Get Session ID
@@ -81,4 +81,8 @@ sleep(10)
 print(datetime.now())
 
 while True:
+<<<<<<< HEAD
     sleep(1)
+=======
+    sleep(1)
+>>>>>>> 4fcc10db2e34928b362b1a8877306394207c8eb5
