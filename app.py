@@ -7,10 +7,7 @@ import pandas as pd
 from datetime import datetime
 
 app = Flask(__name__)
-<<<<<<< HEAD
 CORS(app)
-=======
->>>>>>> 4fcc10db2e34928b362b1a8877306394207c8eb5
 
 def parse_json(data):
     return json.loads(json_util.dumps(data))
@@ -37,10 +34,7 @@ filtered_df = df[df['Token'].isin(tokens)]
 
 # Extract the strike price, option type, and token for each token number
 strike_prices = filtered_df[['Strike Price', 'Option Type', 'Token']]
-<<<<<<< HEAD
 strike_prices.to_csv('updated_NFO.csv', index=False)
-=======
->>>>>>> 4fcc10db2e34928b362b1a8877306394207c8eb5
 
 print(strike_prices)
 

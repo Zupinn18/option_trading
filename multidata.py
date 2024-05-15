@@ -81,8 +81,4 @@ sleep(10)
 print(datetime.now())
 
 while True:
-<<<<<<< HEAD
     sleep(1)
-=======
-    sleep(1)
->>>>>>> 4fcc10db2e34928b362b1a8877306394207c8eb5
