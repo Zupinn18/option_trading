@@ -1,0 +1,62 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  padding: 0%;
+  margin: 0%;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: rgb(76, 77, 76);
+}
+
+.column {
+  width: 200px;
+  height: 400px;
+  padding: 20px;
+  margin: 0 2px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.column h3 {
+  background-color: rgb(255, 245, 185);
+  border-radius: 10px;
+  padding: 5px;
+  margin-top: 0;
+}
+
+ul {
+  padding: 0;
+  margin-top: 15%;
+}
+
+li {
+  list-style-type: none;
+  padding-bottom: 25%;
+  font-weight: bolder;
+}
+
+.call-column {
+  background-color: rgb(184, 184, 184);
+  color: green;
+}
+
+.strike-column {
+  background-color: #f0f0f0;
+  color: navy;
+}
+
+.put-column {
+  background-color: rgb(184, 184, 184);
+  color: red;
+}
+
+#strike-list{
+  max-height:inherit;
+}

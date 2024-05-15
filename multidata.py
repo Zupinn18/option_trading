@@ -19,8 +19,10 @@ unsubscribe_list = []
 def save_to_mongodb(token, data):
     collection_name = f'token_{token}'  # Create collection name based on the token
     collection = db[collection_name]
+    timestamp = datetime.now()  # Get current timestamp
+    data['timestamp'] = timestamp  # Add timestamp to the data
     collection.insert_one(data)
-    print(f"Data saved for token {token}")
+    print(f"Data saved for token {token} at {timestamp}")
 
 def socket_open():
     print("Connected")
@@ -70,7 +72,7 @@ while not socket_opened:
     pass
 
 # Example tokens
-tokens = [44152, 44159, 44160, 44161, 44162, 44163, 44164, 44171, 44172, 44183]
+tokens = [41558, 41561, 41568, 41569, 41572, 41573, 41574, 41576, 41577, 41610, 41615, 41616, 41617, 41620, 41621, 41638]
 
 subscribe_list = [alice.get_instrument_by_token('NFO', token) for token in tokens]
 alice.subscribe(subscribe_list)
@@ -79,4 +81,4 @@ sleep(10)
 print(datetime.now())
 
 while True:
-    sleep(1) 
+    sleep(1)

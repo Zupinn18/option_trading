@@ -1,21 +1,25 @@
 from flask import Flask, jsonify, render_template
+from flask_cors import CORS
 from pymongo import MongoClient
-from bson import ObjectId
+from bson import ObjectId, json_util
 import json
 import pandas as pd
+from datetime import datetime
 
+app = Flask(__name__)
+CORS(app)
 
-def index():
-    return render_template('index.html')
-
+def parse_json(data):
+    return json.loads(json_util.dumps(data))
 
 class CustomJSONEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, ObjectId):
             return str(obj)
+        elif isinstance(obj, datetime):
+            return obj.strftime('%Y-%m-%d %H:%M:%S')  # Convert datetime to string in a specific format
         return json.JSONEncoder.default(self, obj)
 
-app = Flask(__name__)
 app.json_encoder = CustomJSONEncoder  # Set the custom JSON encoder for the Flask app
 
 # MongoDB connection
@@ -28,10 +32,15 @@ df = pd.read_csv('NFO.csv')
 # Filter the DataFrame to only include rows with the specified token numbers
 filtered_df = df[df['Token'].isin(tokens)]
 
-# Extract the strike price for each token number
-strike_prices = filtered_df['Strike Price']
+# Extract the strike price, option type, and token for each token number
+strike_prices = filtered_df[['Strike Price', 'Option Type', 'Token']]
+strike_prices.to_csv('updated_NFO.csv', index=False)
 
 print(strike_prices)
+
+@app.route('/', methods=['GET'])
+def index():
+    return render_template('index.html')
 
 @app.route('/get_data', methods=['GET'])
 def get_data():
@@ -39,9 +48,11 @@ def get_data():
     for token in tokens:
         collection_name = f'token_{token}'  # Create collection name based on the token
         collection = db[collection_name]
-        data = collection.find_one()  # Assuming you want to fetch one document
+        # Assuming 'timestamp' is the field name in MongoDB for the last updated time
+        data = collection.find_one(sort=[('_id', -1)])  # Sort by _id in descending order to get the latest document
         if data:
-            response_data[token] = {'status': 'success', 'data': data}
+            parsed_data = parse_json(data)
+            response_data[token] = {'status': 'success', 'data': parsed_data, 'timestamp': data.get('timestamp', 'N/A')}
         else:
             response_data[token] = {'status': 'error', 'message': 'Data not found'}
 
