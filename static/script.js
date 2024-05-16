@@ -1,16 +1,21 @@
+
+let strikeSet = {}; // unique strike values
+
 async function fetchDataFromCSV() {
     try {
-        const response = await fetch('updated_NFO.csv');
+        const response = await fetch('./static/updated_NFO.csv');
         if (!response.ok) {
             throw new Error('Failed to fetch CSV file');
         }
         const csvData = await response.text();
-        const rows = csvData.split('\n').slice(1);
-        const optionsData = rows.map(row => {
+        const rows = csvData.split('\n').slice(1); // Skip header row
+        const dataArray = rows.map(row => {
             const [strike, optionType, token] = row.split(',');
-            return { strike: parseFloat(strike), optionType, token: parseInt(token) };
-        });
-        return optionsData;
+            if (!isNaN(parseFloat(strike))) {
+                return { strike: parseFloat(strike), optionType, token: parseInt(token) };
+            }
+        }).filter(Boolean); // Filter out NaN values
+        return dataArray;
     } catch (error) {
         console.error(error);
         return [];
@@ -24,10 +29,11 @@ async function fetchLP(token) {
             throw new Error('Failed to fetch LP value');
         }
         const data = await response.json();
-        if (!data[token] || !data[token].data || !data[token].data.lp) {
+        if (data[token] && data[token].data && data[token].data.lp) {
+            return data[token].data.lp;
+        } else {
             throw new Error('LP value not found in response');
         }
-        return data[token].data.lp;
     } catch (error) {
         console.error(error);
         return 'N/A';
@@ -35,9 +41,9 @@ async function fetchLP(token) {
 }
 
 async function fetchDataAndUpdate() {
-    const data = await fetchDataFromCSV();
+    const csvData = await fetchDataFromCSV();
     const optionsData = [];
-    for (const item of data) {
+    for (const item of csvData) {
         const lp = await fetchLP(item.token);
         optionsData.push({ strike: item.strike, optionType: item.optionType, lp: lp });
     }
@@ -50,16 +56,22 @@ function updateOptions(optionsData) {
     const putList = document.getElementById('put-list');
     
     callList.innerHTML = '';
-    strikeList.innerHTML = '';
     putList.innerHTML = '';
     
     optionsData.forEach(option => {
         if (option.optionType === 'CE') {
             callList.innerHTML += `<li>${option.lp}</li>`;
-        } else {
+        } else if(option.optionType === 'PE') {
             putList.innerHTML += `<li>${option.lp}</li>`;
         }
-        strikeList.innerHTML += `<li>${option.strike}</li>`;
+    });
+    
+    // Update strike values only if they are not already present
+    optionsData.forEach(option => {
+        if (!strikeSet[option.strike]) {
+            strikeList.innerHTML += `<li>${option.strike}</li>`;
+            strikeSet[option.strike] = true; // Mark the strike value as added
+        }
     });
 }
 

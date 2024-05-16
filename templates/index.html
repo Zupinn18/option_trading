@@ -3,15 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="../static/style.css">
 
 
 </head>
 <body>
-
-   
 
     <div class="container">
         <div class="column call-column">
@@ -21,11 +18,6 @@
         <div class="column strike-column">
             <h3>Strike</h3>
             <ul id="strike-list">
-                <li>47600.0</li>
-                <li>47700.0</li>
-                <li>47800.0</li>
-                <li>47900.0</li>
-                <li>48000.0</li>
             </ul>
         </div>
         <div class="column put-column">
@@ -36,39 +28,4 @@
 
   <script src="../static/script.js"></script>
 </body>
-</html>
-=======
-    <title>Token Data</title>
-</head>
-<body>
-    <h1>Token Data</h1>
-
-    <div id="tokenData">
-        <!-- Data will be dynamically inserted here -->
-    </div>
-
-    <script>
-        function fetchData() {
-            fetch('http://65.2.34.239:8005/get_data')
-                .then(response => response.json())
-                .then(data => {
-                    const tokenDataElement = document.getElementById('tokenData');
-                    tokenDataElement.innerHTML = '';  // Clear previous data
-                    Object.keys(data).forEach(token => {
-                        const tokenInfo = data[token];
-                        const tokenDiv = document.createElement('div');
-                        tokenDiv.innerHTML = `<p>Token: ${token}</p>
-                                              <p>Status: ${tokenInfo.status}</p>
-                                              <p>Data: ${JSON.stringify(tokenInfo.data)}</p>`;
-                        tokenDataElement.appendChild(tokenDiv);
-                    });
-                })
-                .catch(error => console.error('Error fetching data:', error));
-        }
-
-        // Fetch data every second
-        setInterval(fetchData, 1000);
-    </script>
-</body>
-</html>
->>>>>>> 4fcc10db2e34928b362b1a8877306394207c8eb5
+</html> 
