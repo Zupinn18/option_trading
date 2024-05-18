@@ -72,7 +72,7 @@ while not socket_opened:
     pass
 
 # Example tokens
-tokens = [41558, 41561, 41568, 41569, 41572, 41573, 41574, 41576, 41577, 41610, 41615, 41616, 41617, 41620, 41621, 41638]
+tokens = [41558, 41561, 41568, 41569, 41572, 41573, 41574, 41576, 41577, 41610, 41615, 41616, 41617, 41620, 41621, 41638, 41639, 41642, 41644, 41645, 41646, 41647, 41653, 41666, 41667, 41671]
 
 subscribe_list = [alice.get_instrument_by_token('NFO', token) for token in tokens]
 alice.subscribe(subscribe_list)
